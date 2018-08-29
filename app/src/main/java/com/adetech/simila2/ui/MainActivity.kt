@@ -6,8 +6,8 @@ import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
 import android.widget.Toast
 import com.adetech.simila2.R
-import com.adetech.simila2.ui.fragments.AboutFragment
-import com.adetech.simila2.ui.fragments.SearchArtistFragment
+import com.adetech.simila2.ui.SearchList.SearchArtistFragment
+import com.adetech.simila2.ui.about.AboutFragment
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
