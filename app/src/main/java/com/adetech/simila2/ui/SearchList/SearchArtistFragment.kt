@@ -10,7 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.adetech.simila2.R
 import com.adetech.simila2.data.Model.ArtistList
-import com.adetech.simila2.data.network.Status
+import com.adetech.simila2.data.network.NetWorkState
 import kotlinx.android.synthetic.main.fragment_search_artist.*
 import kotlinx.android.synthetic.main.recyclerview.*
 
@@ -32,27 +32,28 @@ class SearchArtistFragment : Fragment() {
         val adapter: SearchListAdapter = initRcylcerView()
         initNetworkStateViewModel()
 
-        search.setOnClickListener { searchViewModel.getSimilarArtists("birdy").observe(this, Observer { artistList: ArtistList? -> adapter.setWords(artistList?.artist) }) }
+        search.setOnClickListener { searchViewModel.getSimilarArtists("birdyjbhh").observe(this, Observer { artistList: ArtistList? -> adapter.setWords(artistList?.artist) }) }
 
     }
 
     private fun initNetworkStateViewModel() {
 
-        searchViewModel.getNetworkState().observe(this, Observer { status: Status? ->
-            when (status) {
-                Status.NOTLOADED -> {
-                    initLoadingUI(View.VISIBLE, View.INVISIBLE, View.INVISIBLE)
+        searchViewModel.getNetworkState().observe(this, Observer { state: NetWorkState? ->
+            when (state) {
+                is NetWorkState.NotLoaded -> {
+                    initLoadingUI(View.INVISIBLE, View.INVISIBLE, View.INVISIBLE)
                 }
 
-                Status.LOADING -> {
+                is NetWorkState.Loading -> {
                     initLoadingUI(View.INVISIBLE, View.VISIBLE, View.INVISIBLE)
                 }
 
-                Status.SUCCESS -> {
+                is NetWorkState.Success -> {
                     initLoadingUI(View.VISIBLE, View.INVISIBLE, View.INVISIBLE)
                 }
-                Status.FAILURE -> {
-                    //TODO implement failure logic
+                is NetWorkState.Error -> {
+                    initLoadingUI(View.INVISIBLE, View.INVISIBLE, View.VISIBLE)
+                    textPlaceholder.text = state.errorMessage
                 }
 
             }
