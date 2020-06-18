@@ -1,1 +1,1 @@
-Simila is and android app that allows users find new artist.
+Simila is an android app that allows users find new artist.
